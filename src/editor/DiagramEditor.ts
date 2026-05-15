@@ -112,11 +112,20 @@ export class DiagramEditor {
 
 		// Arrow markers
 		const defs = svgEl("defs");
-		defs.innerHTML = `
-			<marker id="ddb-arrow-end" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
-				<path d="M0,0 L0,6 L8,3 z" class="drawdb-arrow-fill" />
-			</marker>
-		`;
+		const marker = svgEl("marker");
+		marker.setAttribute("id", "ddb-arrow-end");
+		marker.setAttribute("markerWidth", "8");
+		marker.setAttribute("markerHeight", "8");
+		marker.setAttribute("refX", "7");
+		marker.setAttribute("refY", "3");
+		marker.setAttribute("orient", "auto");
+
+		const path = svgEl("path");
+		path.setAttribute("d", "M0,0 L0,6 L8,3 z");
+		path.setAttribute("class", "drawdb-arrow-fill");
+
+		marker.appendChild(path);
+		defs.appendChild(marker);
 		this.svgLayer.appendChild(defs);
 
 		this.canvas = this.canvasWrapper.createDiv({ cls: "drawdb-canvas" });

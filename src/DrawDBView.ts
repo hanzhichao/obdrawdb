@@ -111,7 +111,6 @@ export class DrawDBView extends ItemView {
 			new Notice("Diagram saved");
 		} catch (e) {
 			new Notice("Failed to save diagram");
-			console.error(e);
 		}
 	}
 }
