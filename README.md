@@ -22,12 +22,6 @@ Create, edit, and export relational database schemas directly inside your vault 
 
 ---
 
-## Screenshot
-
-![DrawDB in Obsidian](./drawdb.png)
-
----
-
 ## Usage
 
 ### Create a new diagram
