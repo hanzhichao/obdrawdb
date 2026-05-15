@@ -18,7 +18,7 @@ export interface DiagramEditorOptions {
 }
 
 function svgEl<K extends keyof SVGElementTagNameMap>(tag: K): SVGElementTagNameMap[K] {
-	return document.createElementNS("http://www.w3.org/2000/svg", tag);
+	return activeDocument.createElementNS("http://www.w3.org/2000/svg", tag);
 }
 
 export class DiagramEditor {
@@ -125,10 +125,10 @@ export class DiagramEditor {
 		this.buildToolbar();
 		this.buildPropertiesPanel();
 		this.attachCanvasEvents();
-		document.addEventListener("mousemove", this.boundMouseMove);
-		document.addEventListener("mouseup", this.boundMouseUp);
-		document.addEventListener("keydown", this.boundKeyDown);
-		document.addEventListener("keyup", this.boundKeyUp);
+		activeDocument.addEventListener("mousemove", this.boundMouseMove);
+		activeDocument.addEventListener("mouseup", this.boundMouseUp);
+		activeDocument.addEventListener("keydown", this.boundKeyDown);
+		activeDocument.addEventListener("keyup", this.boundKeyUp);
 
 		this.pushHistory();
 	}
@@ -159,10 +159,10 @@ export class DiagramEditor {
 	}
 
 	destroy(): void {
-		document.removeEventListener("mousemove", this.boundMouseMove);
-		document.removeEventListener("mouseup", this.boundMouseUp);
-		document.removeEventListener("keydown", this.boundKeyDown);
-		document.removeEventListener("keyup", this.boundKeyUp);
+		activeDocument.removeEventListener("mousemove", this.boundMouseMove);
+		activeDocument.removeEventListener("mouseup", this.boundMouseUp);
+		activeDocument.removeEventListener("keydown", this.boundKeyDown);
+		activeDocument.removeEventListener("keyup", this.boundKeyUp);
 		this.container.empty();
 	}
 
@@ -226,7 +226,7 @@ export class DiagramEditor {
 
 		// Save
 		const saveBtn = this.toolbar.createEl("button", { cls: "drawdb-toolbar-btn drawdb-btn-accent", text: "Save" });
-		saveBtn.addEventListener("click", () => this.save());
+		saveBtn.addEventListener("click", () => void this.save());
 
 		// Export SQL
 		const exportBtn = this.toolbar.createEl("button", { cls: "drawdb-toolbar-btn", text: "Export SQL" });

@@ -21,7 +21,10 @@ export class DrawDBSettingTab extends PluginSettingTab {
 	display(): void {
 		const { containerEl } = this;
 		containerEl.empty();
-		containerEl.createEl("h2", { text: "DrawDB Settings" });
+
+		new Setting(containerEl)
+			.setName("DrawDB Settings")
+			.setHeading();
 
 		new Setting(containerEl)
 			.setName("Default database type")
@@ -29,9 +32,9 @@ export class DrawDBSettingTab extends PluginSettingTab {
 			.addDropdown(drop => {
 				DATABASE_TYPES.forEach(db => drop.addOption(db, db));
 				drop.setValue(this.plugin.settings.defaultDatabase);
-				drop.onChange(async (value) => {
+				drop.onChange((value) => {
 					this.plugin.settings.defaultDatabase = value;
-					await this.plugin.saveSettings();
+					void this.plugin.saveSettings();
 				});
 			});
 	}
