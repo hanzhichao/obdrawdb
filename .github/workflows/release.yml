@@ -10,6 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+      id-token: write
     steps:
       - uses: actions/checkout@v4
 
@@ -24,6 +25,37 @@ jobs:
       - name: Build
         run: npm run build
 
+      - name: Generate artifact attestation
+        uses: actions/attest-build-provenance@v1
+        with:
+          subject-path: |
+            main.js
+            manifest.json
+            styles.css
+
+      - name: Create Release Notes
+        id: release_notes
+        run: |
+          VERSION=${GITHUB_REF#refs/tags/}
+          echo "release_body<<EOF" >> $GITHUB_OUTPUT
+          echo "## ObDrawDB v$VERSION" >> $GITHUB_OUTPUT
+          echo "" >> $GITHUB_OUTPUT
+          echo "A visual ER diagram editor for Obsidian, powered by drawdb." >> $GITHUB_OUTPUT
+          echo "" >> $GITHUB_OUTPUT
+          echo "### Features" >> $GITHUB_OUTPUT
+          echo "- Infinite canvas with pan and zoom controls" >> $GITHUB_OUTPUT
+          echo "- Create and edit tables with fields and constraints" >> $GITHUB_OUTPUT
+          echo "- Draw relationships with configurable cardinality" >> $GITHUB_OUTPUT
+          echo "- Support for multiple database types (MySQL, PostgreSQL, SQLite, MSSQL)" >> $GITHUB_OUTPUT
+          echo "- Export database schemas to SQL" >> $GITHUB_OUTPUT
+          echo "- .drawdb files compatible with drawdb.io" >> $GITHUB_OUTPUT
+          echo "" >> $GITHUB_OUTPUT
+          echo "### Installation" >> $GITHUB_OUTPUT
+          echo "1. Download the plugin files from the assets below" >> $GITHUB_OUTPUT
+          echo "2. Extract to your vault's .obsidian/plugins directory" >> $GITHUB_OUTPUT
+          echo "3. Enable the plugin in Obsidian settings" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
       - name: Upload release assets
         uses: softprops/action-gh-release@v1
         with:
@@ -31,3 +63,4 @@ jobs:
             main.js
             manifest.json
             styles.css
+          body: ${{ steps.release_notes.outputs.release_body }}

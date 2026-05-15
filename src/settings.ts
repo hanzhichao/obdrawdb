@@ -23,7 +23,7 @@ export class DrawDBSettingTab extends PluginSettingTab {
 		containerEl.empty();
 
 		new Setting(containerEl)
-			.setName("DrawDB Settings")
+			.setName("DrawDB")
 			.setHeading();
 
 		new Setting(containerEl)

@@ -893,7 +893,7 @@ export class DiagramEditor {
 		const sql = this.generateSQL();
 		const blob = new Blob([sql], { type: "text/plain" });
 		const url = URL.createObjectURL(blob);
-		const a = document.createElement("a");
+		const a = activeDocument.createElement("a");
 		a.href = url;
 		a.download = "schema.sql";
 		a.click();
