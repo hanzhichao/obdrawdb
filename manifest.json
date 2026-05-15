@@ -1,7 +1,7 @@
 {
 	"id": "obdrawdb",
 	"name": "ObDrawDB",
-	"version": "0.1.1",
+	"version": "0.1.2",
 	"minAppVersion": "0.16.0",
 	"description": "Visual database diagram editor (ER diagrams) powered by drawdb. Create, edit and export database schemas as .drawdb files.",
 	"author": "hanzhichao",
